@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--context标签：
+        id: 必填
+        targetRuntime: MyBatis3/MyBatis3Simple
+    -->
+    <context id="atguiguTables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!--数据库连接的信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/project_crowd"
+                        userId="root"
+                        password="123456">
+            <!--是否去除同名表：一定要加，不然会在所有的库中去查找同名表-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <!-- 默认 false，把 JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，
+               为 true 时把JDBC DECIMAL 和 NUMERIC 类型解析为 java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- javaModelGenerator javaBean生成的配置信息
+             targetProject:生成POJO类的位置：./代表跳转到上一级目录, Working directory需要设置为$MODULE_DIR$
+             targetPackage：生成POJO类的类名-->
+        <javaModelGenerator targetPackage="com.atguigu.crowd.entity"
+                            targetProject=".\src\main\java">
+            <!-- enableSubPackages:是否允许子包,是否让schema作为包的后缀
+                 即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false" />
+            <!-- 从数据库返回的值是否清理前后的空格 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+
+        <!-- sqlMapGenerator Mapper映射文件的配置信息
+            targetProject:mapper映射文件生成的位置
+            targetPackage:生成mapper映射文件放在哪个包下-->
+        <sqlMapGenerator targetPackage="com.atguigu.crowd.mapper"
+                         targetProject=".\src\main\java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!--javaClientGenerator 生成 Model对象(JavaBean)和 mapper XML配置文件 对应的Dao代码
+           targetProject:mapper接口生成的位置
+           targetPackage:生成mapper接口放在哪个包下
+           type:ANNOTATEDMAPPER/XMLMAPPER/MIXEDMAPPER
+        -->
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.atguigu.crowd.mapper"
+                             targetProject=".\src\main\java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator><!---->
+        <!-- 指定数据库表
+            table：表名
+            domainObjectName:pojo名
+        -->
+        <!--<table tableName="t_admin" domainObjectName="Admin"/>
+        <table tableName="t_role" domainObjectName="Role"/>-->
+        <!--<table tableName="t_menu" domainObjectName="Menu"/>-->
+        <table tableName="t_auth" domainObjectName="Auth"/>
+
+    </context>
+</generatorConfiguration>
